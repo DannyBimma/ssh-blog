@@ -14,11 +14,27 @@ This project reimagines the blog as a terminal-first experience. When users SSH 
 - **C Implementation**: Blog viewer written in pure C (C89/C99 standard) for performance and portability
 
 ### Interactive Navigation (Vim-style)
-- **`L` (capital L)**: Navigate to the previous blog entry
-- **`K` (capital K)**: Navigate to the next blog entry
-- **`:q`**: Quit the blog viewer (disconnect)
-- **`:b`**: Display a list of all available blog entries
-- **`:/`**: Enter search mode to search across all blog entries
+
+#### Entry Navigation
+- **`K`**: Navigate to the next blog entry
+- **`L`**: Navigate to the previous blog entry
+- **`:b`** or **`b`**: Display a list of all available blog entries
+
+#### Scrolling & Pagination
+- **`j`** or **`↓`**: Scroll down one line
+- **`k`** or **`↑`**: Scroll up one line
+- **`Ctrl+F`** or **`Page Down`**: Scroll down one page
+- **`Ctrl+B`** or **`Page Up`**: Scroll up one page
+- **`g`** or **`Home`**: Jump to top of current entry
+- **`G`** or **`End`**: Jump to bottom of current entry
+
+#### Search
+- **`:/query`**: Search for "query" across all blog entries
+- **`n`**: Navigate to next search result
+- **`N`**: Navigate to previous search result
+
+#### Other
+- **`:q`** or **`q`**: Quit the blog viewer (disconnect)
 
 ### Technical Stack
 - **Language**: C (C89/C99 standard)
@@ -50,7 +66,20 @@ This project reimagines the blog as a terminal-first experience. When users SSH 
 
 ## Development Status
 
-This project is currently in the planning and development phase. See [BUILD_PLAN.md](BUILD_PLAN.md) for the detailed implementation roadmap.
+✅ **Phase 1 Complete**: Core blog viewer implementation
+✅ **Phase 2 Complete**: Advanced features (search, pagination, syntax highlighting)
+🚧 **Phase 3 In Progress**: Server infrastructure and deployment
+
+See [BUILD_PLAN.md](BUILD_PLAN.md) for the detailed implementation roadmap.
+
+### Current Features
+- ✅ Full vim-style navigation
+- ✅ Syntax highlighting for code blocks
+- ✅ Advanced search with multiple results
+- ✅ Pagination controls (Page Up/Down, Home/End)
+- ✅ Interactive blog list
+- ✅ Terminal resize handling
+- ✅ Helper scripts for blog management
 
 ## Quick Start (Future)
 
@@ -61,6 +90,41 @@ ssh blog.dannybimma.com
 ```
 
 No password required - the blog will be publicly accessible via SSH key authentication or simple password-less access for a dedicated read-only user.
+
+## Quick Start (Local Development)
+
+### Build and Run
+```bash
+# Clone the repository
+git clone https://github.com/DannyBimma/ssh-blog.git
+cd ssh-blog
+
+# Build the blog viewer
+make
+
+# Run locally
+./bin/blog_viewer
+```
+
+### Create a New Blog Entry
+```bash
+# Interactive blog entry creator
+./scripts/add_blog_entry.sh
+```
+
+### List All Entries
+```bash
+# View all blog entries with metadata
+./scripts/list_entries.sh
+```
+
+### Deploy to Server
+```bash
+# Deploy blog viewer to your VPS
+./scripts/deploy.sh user@your-server.com
+```
+
+See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed development instructions.
 
 ## Author
 

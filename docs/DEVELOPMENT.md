@@ -98,6 +98,41 @@ ssh-blog/
 └── README.md
 ```
 
+## Utility Scripts
+
+The `scripts/` directory contains helpful utilities for blog management:
+
+### Add New Blog Entry
+```bash
+./scripts/add_blog_entry.sh
+```
+Interactive script that:
+- Prompts for blog title and date
+- Auto-generates URL-friendly slug
+- Creates properly formatted blog entry file
+- Opens in your preferred editor ($EDITOR)
+- Validates the entry format
+
+### List All Entries
+```bash
+./scripts/list_entries.sh
+```
+Displays all blog entries with:
+- Title and date
+- Filename
+- Line count
+- Sorted by date (newest first)
+
+### Deploy to Server
+```bash
+./scripts/deploy.sh user@your-server.com
+```
+Automated deployment script that:
+- Builds the blog viewer
+- Uploads binary and blog entries to server
+- Installs to /usr/local/bin
+- Provides SSH configuration instructions
+
 ## Creating Blog Entries
 
 Blog entries are plain text files with a simple format:
@@ -153,14 +188,32 @@ Compile it with: gcc hello.c -o hello
 
 Once the blog viewer is running:
 
+### Entry Navigation
 - **K** - Navigate to next blog entry
 - **L** - Navigate to previous blog entry
-- **j** - Scroll down
-- **k** - Scroll up
-- **:q** - Quit (or just press 'q')
-- **:b** - Show list of all blog entries
-- **:/query** - Search for "query" in titles and content
+- **:b** or **b** - Show list of all blog entries
 - **:number** - Jump to entry number (e.g., `:3` for third entry)
+
+### Scrolling & Pagination
+- **j** or **↓** - Scroll down one line
+- **k** or **↑** - Scroll up one line
+- **Ctrl+F** or **Page Down** - Scroll down one page
+- **Ctrl+B** or **Page Up** - Scroll up one page
+- **g** or **Home** - Jump to top of current entry
+- **G** or **End** - Jump to bottom of current entry
+
+### Search
+- **:/query** - Search for "query" in titles and content
+- **n** - Navigate to next search result
+- **N** - Navigate to previous search result
+
+### Other
+- **:q** or **q** - Quit
+
+### Visual Features
+- **Syntax highlighting** - Code blocks (indented with 4+ spaces) are highlighted in green
+- **Search context** - Status line shows active search query and match count
+- **Terminal resize** - Automatically adjusts to terminal size changes
 
 ## Debugging
 
