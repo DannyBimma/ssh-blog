@@ -126,6 +126,26 @@ make
 
 See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed development instructions.
 
+## Documentation
+
+### For Developers
+- **[Development Guide](docs/DEVELOPMENT.md)** - Build instructions, coding standards, local testing
+- **[Testing Guide](docs/TESTING.md)** - Automated and manual testing procedures
+- **[Build Plan](BUILD_PLAN.md)** - Complete implementation roadmap and architecture
+
+### For Deployment
+- **[Server Setup Guide](docs/SERVER_SETUP.md)** - Complete deployment guide with VPS recommendations
+  - VPS provider comparison (DigitalOcean, AWS Lightsail, Linode)
+  - Step-by-step server configuration
+  - DNS setup with Namecheap
+  - Security hardening
+  - Troubleshooting
+
+### Quick Links
+- Run tests: `./scripts/test_suite.sh`
+- Deploy: `./scripts/deploy.sh user@server.com`
+- Add entry: `./scripts/add_blog_entry.sh`
+
 ## Author
 
 Danny Bimma
