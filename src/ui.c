@@ -32,6 +32,8 @@ int ui_init(void) {
         init_pair(1, COLOR_CYAN, COLOR_BLACK);    /* Status line */
         init_pair(2, COLOR_YELLOW, COLOR_BLACK);  /* Titles */
         init_pair(3, COLOR_RED, COLOR_BLACK);     /* Errors */
+        init_pair(4, COLOR_GREEN, COLOR_BLACK);   /* Code blocks */
+        init_pair(5, COLOR_BLACK, COLOR_YELLOW);  /* Search highlights */
     }
 
     return 0;
@@ -85,6 +87,22 @@ void ui_draw_entry(const BlogEntry *entry, int scroll_offset) {
             if (current_line >= scroll_offset) {
                 int line_len = line_end - line_start;
 
+                /* Detect code blocks (lines starting with 4+ spaces or tab) */
+                int is_code = 0;
+                if (line_len > 0) {
+                    if (line_start[0] == '\t' ||
+                        (line_len >= 4 && line_start[0] == ' ' &&
+                         line_start[1] == ' ' && line_start[2] == ' ' &&
+                         line_start[3] == ' ')) {
+                        is_code = 1;
+                    }
+                }
+
+                /* Apply code highlighting if this is a code line */
+                if (is_code && has_colors()) {
+                    attron(COLOR_PAIR(4));
+                }
+
                 /* Word wrap long lines */
                 if (line_len > term_width) {
                     int printed = 0;
@@ -97,6 +115,11 @@ void ui_draw_entry(const BlogEntry *entry, int scroll_offset) {
                     }
                 } else {
                     mvprintw(display_line++, 0, "%.*s", line_len, line_start);
+                }
+
+                /* Turn off code highlighting */
+                if (is_code && has_colors()) {
+                    attroff(COLOR_PAIR(4));
                 }
             }
 
