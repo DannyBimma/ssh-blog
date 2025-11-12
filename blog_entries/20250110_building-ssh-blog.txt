@@ -1,0 +1,73 @@
+TITLE: Building an SSH-Accessible Blog
+DATE: 2025-01-10
+---
+The Journey of Building SSH Blog
+
+Today I want to share the story of how this blog came to be. It started with a simple question: "What if people could SSH into my blog instead of viewing it in a browser?"
+
+The Technical Stack
+
+I decided to build this blog viewer in C, using the following:
+- C99 standard for portability
+- ncurses library for terminal UI
+- OpenSSH for the access layer
+- A simple VPS for hosting
+
+Why C?
+
+I chose C for several reasons:
+1. Performance - C is blazingly fast
+2. Learning - Great way to improve low-level programming skills
+3. Portability - C programs run almost anywhere
+4. Challenge - It's more interesting than a web framework
+
+The Architecture
+
+The blog viewer is essentially a custom SSH forced command. When you connect via SSH, instead of getting a shell, you get dropped directly into the blog viewer program.
+
+Here's how it works:
+
+    SSH Connection
+         |
+         v
+    sshd (SSH daemon)
+         |
+         v
+    ForceCommand: blog_viewer
+         |
+         v
+    Blog Viewer (C program)
+         |
+         v
+    Display blog entries
+
+The blog entries themselves are just plain text files with a simple format:
+- TITLE: header
+- DATE: header
+- --- separator
+- Content
+
+The program loads all entries at startup, sorts them by date, and presents them in an interactive ncurses interface.
+
+Challenges Along the Way
+
+1. Terminal handling - Getting ncurses to work properly took some debugging
+2. Memory management - Had to be careful with malloc/free in C
+3. Word wrapping - Implementing proper text wrapping for different terminal widths
+4. SSH configuration - Setting up ForceCommand correctly
+
+Future Enhancements
+
+I have plans to add:
+- Syntax highlighting for code blocks
+- Full-text search with regex support
+- Tags and categories
+- Maybe even ASCII art support
+
+The Code
+
+The entire project is open source and available on GitHub. Feel free to check it out, fork it, or even host your own SSH blog!
+
+This has been a fun project that combines systems programming, server administration, and creative thinking. Sometimes the best projects are the ones that make you ask "why not?"
+
+Happy hacking!

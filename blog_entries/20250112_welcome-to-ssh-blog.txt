@@ -1,0 +1,32 @@
+TITLE: Welcome to SSH Blog
+DATE: 2025-01-12
+---
+Welcome to SSH Blog - An Unconventional Tech Blog
+
+This is not your typical blog. Instead of clicking around in a web browser, you're reading this directly in your terminal via SSH. Pretty cool, right?
+
+Why SSH?
+
+I wanted to create something different - a blog that developers would find interesting and memorable. SSH is ubiquitous in our field, secure, and works great even on slow connections. Plus, it reminds me of the old BBS (Bulletin Board System) days.
+
+What to Expect
+
+On this blog, I'll be writing about:
+- Systems programming and low-level development
+- SSH and terminal tricks
+- Interesting coding projects
+- Tech experiments and ideas
+
+How to Navigate
+
+This blog viewer uses vim-inspired navigation:
+- K: Move to the next blog entry
+- L: Move to the previous blog entry
+- j/k: Scroll up and down within an entry
+- :q: Quit the viewer
+- :b: Show a list of all blog entries
+- :/query: Search for something
+
+Feel free to explore and enjoy the unconventional reading experience!
+
+- Danny Bimma

@@ -1,0 +1,87 @@
+TITLE: Principles of Terminal UI Design
+DATE: 2025-01-08
+---
+Designing User Interfaces for the Terminal
+
+Terminal User Interfaces (TUIs) have been around since the dawn of computing, but they're still relevant today. In fact, many developers prefer TUIs for their speed and keyboard-centric workflows.
+
+What Makes a Good TUI?
+
+After building this SSH blog viewer, I've learned several important principles:
+
+1. Clear Visual Hierarchy
+   Even without colors (though ncurses supports them), you can create hierarchy through:
+   - Spacing and whitespace
+   - Text formatting (bold, underline, reverse video)
+   - Consistent layout patterns
+
+2. Keyboard-First Navigation
+   Mouse support is nice, but a good TUI should be fully usable with just the keyboard. Vim-style keybindings are popular because they keep your hands on the home row.
+
+3. Provide Context
+   Always show the user where they are:
+   - Status lines showing current position
+   - Clear indicators of available commands
+   - Mode indicators (normal, command, search, etc.)
+
+4. Handle Terminal Diversity
+   Different terminals have different:
+   - Sizes (80x24 vs modern larger terminals)
+   - Color support (monochrome, 8 colors, 256 colors, true color)
+   - Character encodings (ASCII, UTF-8)
+
+   Your TUI should gracefully handle all of these.
+
+5. Responsive Feedback
+   Users should always know their input was received:
+   - Immediate visual feedback on keypress
+   - Progress indicators for long operations
+   - Error messages that are visible but not intrusive
+
+The ncurses Library
+
+For this project, I used ncurses, which provides:
+- Screen management and buffering
+- Keyboard input handling
+- Color support
+- Window management
+- Portable across Unix-like systems
+
+Basic ncurses usage looks like this:
+
+    /* Initialize */
+    initscr();
+    cbreak();
+    noecho();
+
+    /* Draw */
+    mvprintw(0, 0, "Hello, World!");
+    refresh();
+
+    /* Cleanup */
+    endwin();
+
+Lessons Learned
+
+Building this TUI taught me:
+- Terminal programming requires careful state management
+- Always test on different terminal emulators
+- Clear is better than clever
+- Less is more - don't clutter the interface
+
+Inspiration
+
+Some excellent TUIs to study:
+- vim/neovim - The gold standard for modal editing
+- htop - Beautiful system monitor
+- tig - Git repository browser
+- mc (Midnight Commander) - File manager
+- mutt - Email client
+
+Each of these demonstrates excellent TUI design principles.
+
+Conclusion
+
+Terminal UIs are far from dead. They offer speed, efficiency, and a certain aesthetic appeal that graphical UIs can't match. Whether you're building a system utility, a developer tool, or (like this project) an unconventional blog, TUIs are a great choice.
+
+Give it a try - your next project might just be terminal-based!
