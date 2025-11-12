@@ -144,12 +144,24 @@ void ui_draw_status(const AppState *state) {
 
     /* Show current entry number and total */
     char status_text[256];
-    snprintf(status_text, sizeof(status_text),
-             " Entry %d/%d | %s | K:next L:prev :q:quit :b:list :/search ",
-             state->db->current_index + 1,
-             state->db->count,
-             state->db->count > 0 ?
-                state->db->entries[state->db->current_index].date : "");
+
+    /* Show search info if search is active */
+    if (state->search_results.count > 0) {
+        snprintf(status_text, sizeof(status_text),
+                 " Entry %d/%d | SEARCH: '%s' [%d/%d] | n:next N:prev K/L:navigate :q:quit ",
+                 state->db->current_index + 1,
+                 state->db->count,
+                 state->search_query,
+                 state->search_results.current + 1,
+                 state->search_results.count);
+    } else {
+        snprintf(status_text, sizeof(status_text),
+                 " Entry %d/%d | %s | K:next L:prev :q:quit :b:list :/search ",
+                 state->db->current_index + 1,
+                 state->db->count,
+                 state->db->count > 0 ?
+                    state->db->entries[state->db->current_index].date : "");
+    }
 
     mvprintw(status_y, 0, "%.*s", term_width, status_text);
     attroff(COLOR_PAIR(1) | A_REVERSE);

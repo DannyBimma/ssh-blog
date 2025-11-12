@@ -41,11 +41,19 @@ typedef enum {
     MODE_SEARCH      /* Search mode (:/) */
 } ViewMode;
 
+/* Search results tracking */
+typedef struct {
+    int entry_indices[MAX_ENTRIES];  /* Indices of matching entries */
+    int count;                       /* Number of matches */
+    int current;                     /* Current match being viewed */
+} SearchResults;
+
 typedef struct {
     BlogDatabase *db;
     ViewMode mode;
     int scroll_offset;
     char search_query[256];
+    SearchResults search_results;
     int quit_requested;
 } AppState;
 

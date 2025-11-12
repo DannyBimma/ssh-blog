@@ -109,6 +109,20 @@ static void run_blog_viewer(AppState *state) {
                     state->mode = MODE_LIST;
                     break;
 
+                case 'n':
+                    /* Next search result */
+                    if (state->search_results.count > 0) {
+                        nav_next_search_result(state);
+                    }
+                    break;
+
+                case 'N':
+                    /* Previous search result */
+                    if (state->search_results.count > 0) {
+                        nav_prev_search_result(state);
+                    }
+                    break;
+
                 case KEY_RESIZE:
                     /* Handle terminal resize */
                     ui_clear();
@@ -191,6 +205,8 @@ int main(int argc, char *argv[]) {
         .quit_requested = 0
     };
     state.search_query[0] = '\0';
+    state.search_results.count = 0;
+    state.search_results.current = 0;
 
     /* Start at the latest (first) entry */
     db->current_index = 0;

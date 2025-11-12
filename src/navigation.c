@@ -112,21 +112,21 @@ int nav_handle_command(AppState *state, const char *command) {
         if (strlen(query) > 0) {
             strncpy(state->search_query, query, sizeof(state->search_query) - 1);
             state->search_query[sizeof(state->search_query) - 1] = '\0';
-            state->mode = MODE_SEARCH;
 
-            /* Simple search: find first entry containing the query */
-            int found = 0;
-            for (int i = 0; i < state->db->count; i++) {
-                BlogEntry *entry = &state->db->entries[i];
-                if (strstr(entry->title, query) != NULL ||
-                    (entry->content && strstr(entry->content, query) != NULL)) {
-                    nav_goto_entry(state, i);
-                    found = 1;
-                    break;
-                }
-            }
+            /* Perform search and collect all matches */
+            int matches = nav_search(state, query);
 
-            if (!found) {
+            if (matches > 0) {
+                state->mode = MODE_SEARCH;
+                /* Show first result */
+                nav_goto_entry(state, state->search_results.entry_indices[0]);
+
+                /* Show match count */
+                char msg[256];
+                snprintf(msg, sizeof(msg), "Found %d match%s (press 'n' for next, 'N' for prev)",
+                        matches, matches == 1 ? "" : "es");
+                ui_show_error(msg);  /* Reusing error display for info */
+            } else {
                 ui_show_error("No results found");
             }
         }
@@ -216,4 +216,77 @@ void nav_handle_list_mode(AppState *state, int key) {
 
     /* Redraw list with new selection */
     ui_draw_blog_list(state->db, selected);
+}
+
+int nav_search(AppState *state, const char *query) {
+    if (!state || !state->db || !query) {
+        return 0;
+    }
+
+    /* Reset search results */
+    state->search_results.count = 0;
+    state->search_results.current = 0;
+
+    /* Search through all entries */
+    for (int i = 0; i < state->db->count; i++) {
+        BlogEntry *entry = &state->db->entries[i];
+
+        /* Check if query matches title or content */
+        if (strstr(entry->title, query) != NULL ||
+            (entry->content && strstr(entry->content, query) != NULL)) {
+            /* Add to search results */
+            if (state->search_results.count < MAX_ENTRIES) {
+                state->search_results.entry_indices[state->search_results.count] = i;
+                state->search_results.count++;
+            }
+        }
+    }
+
+    return state->search_results.count;
+}
+
+void nav_next_search_result(AppState *state) {
+    if (!state || state->search_results.count == 0) {
+        return;
+    }
+
+    /* Move to next result (wrap around) */
+    state->search_results.current++;
+    if (state->search_results.current >= state->search_results.count) {
+        state->search_results.current = 0;
+    }
+
+    /* Navigate to the entry */
+    int entry_idx = state->search_results.entry_indices[state->search_results.current];
+    nav_goto_entry(state, entry_idx);
+
+    /* Show progress */
+    char msg[256];
+    snprintf(msg, sizeof(msg), "Match %d of %d",
+            state->search_results.current + 1,
+            state->search_results.count);
+    ui_show_error(msg);
+}
+
+void nav_prev_search_result(AppState *state) {
+    if (!state || state->search_results.count == 0) {
+        return;
+    }
+
+    /* Move to previous result (wrap around) */
+    state->search_results.current--;
+    if (state->search_results.current < 0) {
+        state->search_results.current = state->search_results.count - 1;
+    }
+
+    /* Navigate to the entry */
+    int entry_idx = state->search_results.entry_indices[state->search_results.current];
+    nav_goto_entry(state, entry_idx);
+
+    /* Show progress */
+    char msg[256];
+    snprintf(msg, sizeof(msg), "Match %d of %d",
+            state->search_results.current + 1,
+            state->search_results.count);
+    ui_show_error(msg);
 }

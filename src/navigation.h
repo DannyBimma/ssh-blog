@@ -48,4 +48,20 @@ void nav_enter_command_mode(AppState *state);
  */
 void nav_handle_list_mode(AppState *state, int key);
 
+/*
+ * Perform search across all blog entries
+ * Returns number of matches found
+ */
+int nav_search(AppState *state, const char *query);
+
+/*
+ * Navigate to next search result
+ */
+void nav_next_search_result(AppState *state);
+
+/*
+ * Navigate to previous search result
+ */
+void nav_prev_search_result(AppState *state);
+
 #endif /* NAVIGATION_H */
