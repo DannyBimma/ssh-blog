@@ -51,8 +51,7 @@ void ui_draw_entry(const BlogEntry *entry, int scroll_offset) {
     /* Update terminal dimensions in case of resize */
     getmaxyx(stdscr, term_height, term_width);
 
-    /* Calculate content area (leave room for status line) */
-    int content_height = term_height - 2;
+    /* Draw content (leave room for status line) */
     int line_num = 0;
 
     /* Draw title */
@@ -205,7 +204,7 @@ int ui_get_command_input(char *buffer, size_t buffer_size) {
     noecho();
     curs_set(0);  /* Hide cursor */
 
-    return (result == OK) ? strlen(buffer) : -1;
+    return (result == OK) ? (int)strlen(buffer) : -1;
 }
 
 void ui_show_error(const char *message) {

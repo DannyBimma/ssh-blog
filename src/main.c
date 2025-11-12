@@ -156,8 +156,8 @@ int main(int argc, char *argv[]) {
 
         /* Create a default entry so the viewer doesn't crash */
         db->entries[0].id = 0;
-        strncpy(db->entries[0].title, "Welcome to SSH Blog", MAX_TITLE_LEN - 1);
-        strncpy(db->entries[0].date, "2025-01-12", MAX_DATE_LEN - 1);
+        snprintf(db->entries[0].title, MAX_TITLE_LEN, "Welcome to SSH Blog");
+        snprintf(db->entries[0].date, MAX_DATE_LEN, "2025-01-12");
         db->entries[0].content = strdup(
             "Welcome to SSH Blog!\n\n"
             "No blog entries were found in the blog directory.\n\n"

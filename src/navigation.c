@@ -5,6 +5,7 @@
 #include "navigation.h"
 #include "ui.h"
 #include <string.h>
+#include <stdlib.h>
 #include <ncurses.h>
 
 void nav_next_entry(AppState *state) {
