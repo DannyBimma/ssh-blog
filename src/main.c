@@ -94,6 +94,30 @@ static void run_blog_viewer(AppState *state) {
                     nav_scroll_up(state);
                     break;
 
+                case 6:  /* Ctrl+F */
+                case KEY_NPAGE:  /* Page Down */
+                    /* Page down */
+                    nav_page_down(state);
+                    break;
+
+                case 2:  /* Ctrl+B */
+                case KEY_PPAGE:  /* Page Up */
+                    /* Page up */
+                    nav_page_up(state);
+                    break;
+
+                case 'g':  /* gg to go to top */
+                case KEY_HOME:
+                    /* Jump to top */
+                    nav_goto_top(state);
+                    break;
+
+                case 'G':  /* G to go to bottom */
+                case KEY_END:
+                    /* Jump to bottom */
+                    nav_goto_bottom(state);
+                    break;
+
                 case ':':
                     /* Enter command mode */
                     nav_enter_command_mode(state);

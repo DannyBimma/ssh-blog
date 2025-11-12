@@ -76,6 +76,46 @@ void nav_scroll_up(AppState *state) {
     }
 }
 
+void nav_page_down(AppState *state) {
+    if (!state) {
+        return;
+    }
+
+    /* Scroll by a full page (roughly 20 lines) */
+    state->scroll_offset += 20;
+    /* TODO: Add max bounds checking */
+}
+
+void nav_page_up(AppState *state) {
+    if (!state) {
+        return;
+    }
+
+    /* Scroll up by a full page */
+    state->scroll_offset -= 20;
+    if (state->scroll_offset < 0) {
+        state->scroll_offset = 0;
+    }
+}
+
+void nav_goto_top(AppState *state) {
+    if (!state) {
+        return;
+    }
+
+    state->scroll_offset = 0;
+}
+
+void nav_goto_bottom(AppState *state) {
+    if (!state || !state->db) {
+        return;
+    }
+
+    /* Set scroll offset to a very large number */
+    /* The UI rendering will handle not going past the end */
+    state->scroll_offset = 10000;
+}
+
 int nav_handle_command(AppState *state, const char *command) {
     if (!state || !command) {
         return 0;

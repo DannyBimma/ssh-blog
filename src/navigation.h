@@ -33,6 +33,26 @@ void nav_scroll_down(AppState *state);
 void nav_scroll_up(AppState *state);
 
 /*
+ * Scroll down one page
+ */
+void nav_page_down(AppState *state);
+
+/*
+ * Scroll up one page
+ */
+void nav_page_up(AppState *state);
+
+/*
+ * Jump to top of current entry
+ */
+void nav_goto_top(AppState *state);
+
+/*
+ * Jump to bottom of current entry
+ */
+void nav_goto_bottom(AppState *state);
+
+/*
  * Handle command mode input
  * Returns 0 to continue, 1 to quit
  */
